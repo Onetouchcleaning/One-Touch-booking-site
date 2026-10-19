@@ -1,0 +1,47 @@
+# Render Blueprint for One Touch Cleaning booking site
+# ---------------------------------------------------------------------------
+# DRAFT prepared by Muse (research stage) — not yet shown to Brittany.
+# How to use: push this folder to a GitHub repo you own, then in Render go to
+# "New +" -> "Blueprint" and point it at the repo. Render reads this file and
+# creates the web service + persistent disk, then asks you to fill in the
+# three secret keys (marked sync: false below).
+#
+# COST NOTE: persistent disks are NOT available on Render's free plan, so this
+# blueprint uses the Starter plan (~$7/mo) + 1GB disk (~$0.25/mo). If you want
+# free, you'd need a host without persistent storage (and then the SQLite
+# database would be wiped on every deploy — not recommended).
+# ---------------------------------------------------------------------------
+
+services:
+  - type: web
+    name: one-touch-cleaning-booking
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    disk:
+      name: booking-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22" # app requires Node >= 22.5; Render resolves to latest 22.x
+      - key: DB_PATH
+        value: /var/data/bookings.db # SQLite file lives on the persistent disk
+      # ---- Secrets: Render will prompt for these on first deploy ----
+      - key: STRIPE_SECRET_KEY
+        sync: false # paste sk_live_... from https://dashboard.stripe.com/apikeys
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false # optional but recommended; from Stripe Dashboard -> Developers -> Webhooks
+      - key: GMAIL_USER
+        value: onetouchcleaning.bf@gmail.com
+      - key: GMAIL_APP_PASSWORD
+        sync: false # Gmail App Password (NOT your Gmail password; needs 2-Step Verification on first)
+      - key: OWNER_EMAIL
+        value: onetouchcleaning.bf@gmail.com
+      # ---- Auto-generated on deploy; view/copy them in the Render dashboard ----
+      - key: ADMIN_PASSWORD
+        generateValue: true # you need this to log in at yoursite.com/admin.html
+      - key: CRON_SECRET
+        generateValue: true # protects the daily-reminder endpoint

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Touch Cleaning LLC — Book Your Clean | South Florida</title>
+<meta name="description" content="Luxury residential & commercial cleaning in Broward, Miami and Palm Beach. Book online in one touch.">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">OT</div>
+    <div>
+      <div class="brand-name">One Touch <span>Cleaning</span></div>
+      <div class="brand-sub">Residential • Commercial • Airbnb</div>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <a class="phone" href="tel:+15612949666">(561) 294-9666</a>
+    <a class="btn btn-gold" href="#book">Book Now</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">A cleaner space, a brighter day</p>
+    <h1>Luxury cleaning with <em>impeccable</em> results.</h1>
+    <p class="hero-copy">Serving Broward, Miami &amp; Palm Beach. Licensed, insured &amp; bonded — reliable, trusted, detail-oriented.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold btn-lg" href="#book">Book Your Clean</a>
+      <a class="btn btn-ghost btn-lg" href="#services">View Services</a>
+    </div>
+    <div class="trust">
+      <span>✓ Reliable</span><span>✓ Trusted</span><span>✓ Licensed</span><span>✓ Insured</span><span>✓ Bonded</span>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <h2>Our Services</h2>
+  <p class="section-sub">2-hour minimum on every visit · $50 non-refundable deposit to reserve</p>
+  <div id="serviceCards" class="cards"><p class="muted">Loading services…</p></div>
+</section>
+
+<section id="book" class="section section-dark">
+  <h2>Book in One Touch</h2>
+  <p class="section-sub">Pick a service, date &amp; time — pay your $50 deposit to lock it in.</p>
+
+  <div class="wizard" id="wizard">
+    <ol class="steps">
+      <li data-step="1" class="active">Service</li>
+      <li data-step="2">Date &amp; Time</li>
+      <li data-step="3">Details</li>
+      <li data-step="4">Deposit</li>
+    </ol>
+
+    <!-- STEP 1 -->
+    <div class="pane" data-pane="1">
+      <label class="field">Choose a service
+        <select id="fService"></select>
+      </label>
+      <label class="field">How long? <span class="muted">(2-hour minimum)</span>
+        <select id="fDuration"></select>
+      </label>
+      <div class="pane-nav"><button class="btn btn-gold" data-next="2">Continue →</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="pane hidden" data-pane="2">
+      <label class="field">Choose a date
+        <input type="date" id="fDate">
+      </label>
+      <p class="muted" id="hoursNote"></p>
+      <div id="slotGrid" class="slots"><p class="muted">Pick a date to see available times.</p></div>
+      <div class="pane-nav">
+        <button class="btn btn-ghost" data-prev="1">← Back</button>
+        <button class="btn btn-gold" data-next="3" id="toStep3" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="pane hidden" data-pane="3">
+      <div class="summary" id="bookingSummary"></div>
+      <div class="grid2">
+        <label class="field">Full name*<input id="fName" autocomplete="name"></label>
+        <label class="field">Email*<input id="fEmail" type="email" autocomplete="email"></label>
+        <label class="field">Phone<input id="fPhone" type="tel" autocomplete="tel"></label>
+        <label class="field">Service address<input id="fAddress" autocomplete="street-address"></label>
+      </div>
+      <label class="field">Notes for our team<textarea id="fNotes" rows="3" placeholder="Pets, parking, priorities…"></textarea></label>
+      <div class="pane-nav">
+        <button class="btn btn-ghost" data-prev="2">← Back</button>
+        <button class="btn btn-gold" data-next="4">Review Deposit →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="pane hidden" data-pane="4">
+      <div class="summary" id="depositSummary"></div>
+      <div class="policy">
+        <h3>Non-refundable deposit policy</h3>
+        <p>A <strong>$50 non-refundable deposit</strong> is required to secure your reservation.
+        Your appointment is <strong>confirmed only after successful payment</strong>.
+        The deposit is applied to your total; the remaining balance is due at the time of service.</p>
+        <label class="ack"><input type="checkbox" id="fAck">
+          I understand and agree that the $50 deposit is <strong>non-refundable</strong>.</label>
+      </div>
+      <p class="error hidden" id="bookError"></p>
+      <div class="pane-nav">
+        <button class="btn btn-ghost" data-prev="3">← Back</button>
+        <button class="btn btn-gold btn-lg" id="payBtn" disabled>Pay $50 Deposit &amp; Book</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lookup" class="section">
+  <h2>Manage an existing booking</h2>
+  <p class="section-sub">Enter your booking code and email to request a cancellation or reschedule.</p>
+  <div class="lookup-box">
+    <label class="field">Booking code<input id="lCode" placeholder="OTC-ABC123"></label>
+    <label class="field">Email<input id="lEmail" type="email"></label>
+    <button class="btn btn-gold" id="lookupBtn">Find booking</button>
+    <div id="lookupResult"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="brand-name">One Touch <span>Cleaning</span> LLC</div>
+      <p>South Florida · Broward | Miami | Palm Beach</p>
+    </div>
+    <div>
+      <p><a href="tel:+15612949666">(561) 294-9666</a> — call · text · DM</p>
+      <p><a href="mailto:onetouchcleaning.bf@gmail.com">onetouchcleaning.bf@gmail.com</a></p>
+      <p><a href="https://www.instagram.com/onetouchcleaningllc" target="_blank" rel="noopener">@onetouchcleaningllc</a></p>
+    </div>
+    <div><p><a href="/admin.html">Owner login</a></p></div>
+  </div>
+  <p class="fine">© One Touch Cleaning LLC · Licensed · Insured · Bonded</p>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

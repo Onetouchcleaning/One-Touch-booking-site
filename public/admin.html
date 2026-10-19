@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Dashboard — One Touch Cleaning</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div id="loginView" class="admin-login hidden">
+  <h2>Owner Login</h2>
+  <label class="field">Password<input type="password" id="adminPass"></label>
+  <p class="error hidden" id="loginErr"></p>
+  <button class="btn btn-gold" id="loginBtn" style="width:100%">Log in</button>
+</div>
+
+<div id="dashView" class="admin-wrap hidden">
+  <div class="toolbar" style="justify-content:space-between">
+    <h2 style="margin:0">Owner Dashboard</h2>
+    <button class="btn btn-ghost" id="logoutBtn">Log out</button>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn btn-gold" data-tab="bookings">Bookings</button>
+    <button class="btn btn-ghost" data-tab="requests">Change requests <span id="reqCount"></span></button>
+    <button class="btn btn-ghost" data-tab="blocks">Blocked time</button>
+    <button class="btn btn-ghost" data-tab="settings">Business settings</button>
+    <button class="btn btn-ghost" data-tab="services">Services &amp; pricing</button>
+  </div>
+
+  <div id="tab-bookings">
+    <div class="toolbar">
+      <label>From <input type="date" id="fltFrom"></label>
+      <label>To <input type="date" id="fltTo"></label>
+      <button class="btn btn-gold" id="fltGo">Filter</button>
+    </div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Date</th><th>Time</th><th>Customer</th><th>Service</th><th>Total</th><th>Deposit</th><th>Status</th><th></th></tr></thead>
+      <tbody id="bookingRows"></tbody>
+    </table></div>
+  </div>
+
+  <div id="tab-requests" class="hidden"><div id="reqRows"></div></div>
+
+  <div id="tab-blocks" class="hidden">
+    <div class="cardrow">
+      <h3>Block time off</h3>
+      <div class="toolbar">
+        <label>Date <input type="date" id="blkDate"></label>
+        <label>Start <input type="time" id="blkStart"></label>
+        <label>End <input type="time" id="blkEnd"></label>
+        <label>Reason <input id="blkReason" placeholder="Holiday, personal…"></label>
+        <button class="btn btn-gold" id="blkAdd">Add block</button>
+      </div>
+      <p class="muted">Leave start/end empty to block the whole day.</p>
+    </div>
+    <div id="blkRows"></div>
+  </div>
+
+  <div id="tab-settings" class="hidden">
+    <div class="cardrow">
+      <h3>Business settings</h3>
+      <label class="field">Business name<input id="setName"></label>
+      <label class="field">Owner email (booking notifications)<input id="setEmail"></label>
+      <label class="field">Phone<input id="setPhone"></label>
+      <label class="field">Deposit (cents, e.g. 5000 = $50)<input id="setDeposit" type="number" min="0" step="100"></label>
+      <label class="field">Business hours (JSON, keys 0=Sun..6=Sat, null = closed)
+        <textarea id="setHours" rows="9" style="width:100%;font-family:monospace"></textarea></label>
+      <button class="btn btn-gold" id="setSave">Save settings</button>
+      <p class="muted" id="setMsg"></p>
+    </div>
+  </div>
+
+  <div id="tab-services" class="hidden"><div id="svcRows"></div></div>
+</div>
+
+<script src="/admin.js"></script>
+</body>
+</html>

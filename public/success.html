@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — One Touch Cleaning</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+<section class="section" style="text-align:center;max-width:600px">
+  <h2 id="msg">Confirming your booking…</h2>
+  <p class="muted" id="sub">Please wait while we verify your deposit payment.</p>
+  <p><a class="btn btn-gold" href="/">Back to home</a></p>
+</section>
+<script>
+(async () => {
+  const sid = new URLSearchParams(location.search).get('session_id');
+  if (!sid) { document.getElementById('msg').textContent = 'Missing session.'; return; }
+  try {
+    const r = await fetch('/api/bookings/confirm?session_id=' + encodeURIComponent(sid));
+    const d = await r.json();
+    if (d.ok) {
+      document.getElementById('msg').textContent = '✓ Booking confirmed!';
+      document.getElementById('sub').innerHTML =
+        `Your $50 deposit was received. A confirmation email is on its way.<br>Booking code: <b>${d.booking_code}</b>`;
+    } else {
+      document.getElementById('msg').textContent = 'Payment not completed';
+      document.getElementById('sub').textContent = d.error || 'Please try again or call (561) 294-9666.';
+    }
+  } catch (e) {
+    document.getElementById('msg').textContent = 'Something went wrong';
+    document.getElementById('sub').textContent = 'Please call/text (561) 294-9666 and mention your booking.';
+  }
+})();
+</script>
+</body>
+</html>
